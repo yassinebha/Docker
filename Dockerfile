@@ -20,48 +20,94 @@ CMD ["/notebook.sh"]
 
 
 ##########this part is from the image "simexp/niak" the MAINTAINER Pierre Bellec <pierre.bellec@criugm.qc.ca>
-# Install Octave
 RUN apt-get update
-RUN apt-get install octave -y
-RUN apt-get install build-essential g++ cmake cmake-curses-gui bison flex freeglut3 freeglut3-dev libxi6 libxi-dev libxmu6 libxmu-dev libxmu-headers imagemagick libjpeg62 -y
-RUN apt-get install "liboctave-dev" -y
-RUN octave --eval "more off; pkg install -auto -global -forge -verbose control general signal image io statistics"
+RUN apt-get dist-upgrade -y
+
+# Install dependencies available through apt-get
+RUN apt-get install -y \
+  freeglut3 \
+  imagemagick \
+  libc6 \
+  libexpat1 \
+  libgl1 \
+  libjpeg62 \
+  libstdc++6 \
+  libtiff4 \
+  libuuid1 \
+  libxau6 \
+  libxcb1 \
+  libxdmcp6 \
+  libxext6 \
+  libx11-6 \
+  perl \
+  wget 
 
 #Install MINC-toolkit
-RUN apt-get install wget -y
-RUN mkdir /home/niak
-RUN wget http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.9.2-20140730-Ubuntu_14.04-x86_64.deb -P /home/niak
-RUN dpkg -i /home/niak/minc-toolkit-1.9.2-20140730-Ubuntu_14.04-x86_64.deb
-RUN rm /home/niak/minc-toolkit-1.9.2-20140730-Ubuntu_14.04-x86_64.deb
+RUN wget http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.9.2-20140730-Ubuntu_12.04-x86_64.deb -P /tmp
+RUN dpkg -i /tmp/minc-toolkit-1.9.2-20140730-Ubuntu_12.04-x86_64.deb
+RUN rm /tmp/minc-toolkit-1.9.2-20140730-Ubuntu_12.04-x86_64.deb
 
-# Install PSOM
-RUN apt-get install unzip
-RUN mkdir -p /home/niak/build/SIMEXP/
-RUN cd /home/niak/build/SIMEXP && wget http://www.nitrc.org/frs/download.php/7065/psom-1.0.2.zip
-RUN cd /home/niak/build/SIMEXP && unzip psom-1.0.2.zip
-RUN rm /home/niak/build/SIMEXP/psom-1.0.2.zip
+# Update repository list
+RUN apt-get update
+RUN apt-get install python-software-properties -y
+RUN apt-add-repository ppa:octave/stable -y
+RUN apt-get update
 
-# Install NIAK
-RUN mkdir -p /home/niak/build/SIMEXP
-RUN cd /home/niak/build/SIMEXP && wget https://github.com/SIMEXP/niak/archive/v0.12.20.zip
-RUN cd /home/niak/build/SIMEXP && unzip v0.12.20.zip
-RUN rm /home/niak/build/SIMEXP/v0.12.20.zip
+# Install octave
+RUN apt-get install -y \
+  bison \
+  build-essential \
+  cmake \
+  cmake-curses-gui \
+  flex \  
+  g++ \
+  imagemagick \
+  liboctave-dev=3.8.1-1ubuntu1~octave1~precise1 \
+  libxi-dev \
+  libxi6 \
+  libxmu-dev \
+  libxmu-headers \
+  libxmu6 \  
+  octave=3.8.1-1ubuntu1~octave1~precise1 \
+  unzip
+  
+# Fetch Octave forge packages
+RUN mkdir /home/octave
+RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/control-2.8.0.tar.gz -P /home/octave
+RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/general-1.3.4.tar.gz -P /home/octave
+RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/signal-1.3.0.tar.gz -P /home/octave
+RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/image-2.2.2.tar.gz -P /home/octave
+RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/io-2.0.2.tar.gz -P /home/octave
+RUN wget http://sourceforge.net/projects/octave/files/Octave%20Forge%20Packages/Individual%20Package%20Releases/statistics-1.2.4.tar.gz -P /home/octave
 
-# Install BCT
-RUN mkdir -p /home/niak/build/SIMEXP
-RUN cd /home/niak/build/SIMEXP && wget https://sites.google.com/site/bctnet/Home/functions/BCT.zip
-RUN cd /home/niak/build/SIMEXP && unzip BCT.zip
-RUN rm /home/niak/build/SIMEXP/BCT.zip
+# Install Octave forge packages
+RUN octave --eval "cd /home/octave; \
+                   more off; \
+                   pkg install -auto -global -verbose \
+                   control-2.8.0.tar.gz \
+                   general-1.3.4.tar.gz \
+                   signal-1.3.0.tar.gz \
+                   image-2.2.2.tar.gz \
+                   io-2.0.2.tar.gz \
+                   statistics-1.2.4.tar.gz"
+# Install mricron and libcanberra
+RUN apt-get install mricron
+RUN apt-get install libcanberra-gtk-module
 
 # Build octave configure file
 RUN echo more off >> /etc/octave.conf
 RUN echo save_default_options\(\'-7\'\)\; >> /etc/octave.conf
 RUN echo graphics_toolkit gnuplot >> /etc/octave.conf
-RUN echo addpath\(genpath\(\"/home/niak/build/SIMEXP/\"\)\)\; >> /etc/octave.conf
-# Add the minc toolkit to the bash config
-# for ubuntu 14.04
-RUN touch /.bashrc
-RUN echo source /opt/minc-itk4/minc-toolkit-config.sh >> /.bashrc
-# docker build -t="pbellec/niak:v0.12.20u14.04" .
-# docker run -i -t --name niak -v /home/pbellec/database:/database --user $UID:$GID pbellec/niak:v0.12.20u14.04 /bin/bash -c "source /.bashrc && octave"
+# Install NIAK
+RUN cd /home/ && wget https://github.com/SIMEXP/niak/archive/v0.13.0.zip && unzip v0.13.0.zip && rm v0.13.0.zip
+RUN mv /home/niak-0.13.0 /home/niak
+
+# Install PSOM
+RUN cd /home/niak/extensions && wget http://www.nitrc.org/frs/download.php/7065/psom-1.0.2.zip && unzip psom-1.0.2.zip && rm psom-1.0.2.zip
+
+# Install BCT
+RUN cd /home/niak/extensions && wget https://sites.google.com/site/bctnet/Home/functions/BCT.zip && unzip BCT.zip && rm BCT.zip
+
+# Build octave configure file
+RUN echo addpath\(genpath\(\"/home/niak/\"\)\)\; >> /etc/octave.conf
 #----------------------------------------------------------------------------------------------------------------
