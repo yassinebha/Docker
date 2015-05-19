@@ -43,9 +43,9 @@ RUN apt-get install -y \
   wget 
 
 #Install MINC-toolkit
-RUN wget http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.9.2-20140730-Ubuntu_12.04-x86_64.deb -P /tmp
-RUN dpkg -i /tmp/minc-toolkit-1.9.2-20140730-Ubuntu_12.04-x86_64.deb
-RUN rm /tmp/minc-toolkit-1.9.2-20140730-Ubuntu_12.04-x86_64.deb
+RUN wget http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb -P /tmp
+RUN dpkg -i /tmp/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb
+RUN rm /tmp/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb
 
 # Update repository list
 RUN apt-get update
@@ -62,13 +62,13 @@ RUN apt-get install -y \
   flex \  
   g++ \
   imagemagick \
-  liboctave-dev=3.8.1-1ubuntu1~octave1~precise1 \
+  liboctave-dev=3.8.1-1ubuntu1 \
   libxi-dev \
   libxi6 \
   libxmu-dev \
   libxmu-headers \
   libxmu6 \  
-  octave=3.8.1-1ubuntu1~octave1~precise1 \
+  octave=3.8.1-1ubuntu1 \
   unzip
   
 # Fetch Octave forge packages
