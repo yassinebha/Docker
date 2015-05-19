@@ -1,4 +1,4 @@
-FROM simexp/niak::0.12.20
+FROM simexp/niak:0.12.20
 MAINTAINER Pierre Bellec <pierre.bellec@criugm.qc.ca>
 
 # Install mricron
