@@ -29,10 +29,10 @@ RUN apt-get install -y \
   imagemagick \
   libc6 \
   libexpat1 \
-  libgl1 \
+  libgl1-mesa-dev \
   libjpeg62 \
   libstdc++6 \
-  libtiff4 \
+  libtiff4-dev \
   libuuid1 \
   libxau6 \
   libxcb1 \
