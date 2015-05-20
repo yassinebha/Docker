@@ -50,8 +50,8 @@ RUN rm /tmp/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb
 # Update repository list
 RUN apt-get update
 RUN apt-get install python-software-properties -y
-RUN apt-add-repository ppa:octave/stable -y
-RUN apt-get update
+#RUN add-apt-repository ppa:octave/stable -y
+#RUN apt-get update
 
 # Install octave
 RUN apt-get install -y \
