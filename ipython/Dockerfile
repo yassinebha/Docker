@@ -91,8 +91,8 @@ RUN octave --eval "cd /home/octave; \
                    io-2.0.2.tar.gz \
                    statistics-1.2.4.tar.gz"
 # Install mricron and libcanberra
-RUN apt-get install mricron
-RUN apt-get install libcanberra-gtk-module
+RUN apt-get install mricron -y
+RUN apt-get install libcanberra-gtk-module -y
 
 # Build octave configure file
 RUN echo more off >> /etc/octave.conf
