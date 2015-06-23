@@ -55,8 +55,6 @@ ADD . /srv/notebook
 WORKDIR /srv/notebook/
 RUN chmod -R +rX /srv/notebook
 
-RUN pip3 install -r requirements.txt -e .[test]
-
 # install kernels
 RUN python2 -m ipykernel.kernelspec
 RUN python3 -m ipykernel.kernelspec
