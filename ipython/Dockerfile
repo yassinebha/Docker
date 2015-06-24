@@ -2,71 +2,10 @@
 # Another Docker container should inherit with `FROM jupyter/notebook`
 # to run actual services.
 
-FROM ubuntu:14.04
-
-MAINTAINER yassinebha <yanamarji@gmail.com.com>
-
-# ENV DEBIAN_FRONTEND noninteractive
-
-# Not essential, but wise to set the lang
-# Note: Users with other languages should set this in their derivative image
-RUN apt-get update && apt-get install -y language-pack-en
-ENV LANGUAGE en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-
-RUN locale-gen en_US.UTF-8
-RUN dpkg-reconfigure locales
-
-# Python binary dependencies, developer tools
-RUN apt-get update && apt-get install -y -q \
-    build-essential \
-    make \
-    gcc \
-    zlib1g-dev \
-    git \
-    python \
-    python-dev \
-    python-pip \
-    python3-dev \
-    python3-pip \
-    python-sphinx \
-    python3-sphinx \
-    libzmq3-dev \
-    sqlite3 \
-    libsqlite3-dev \
-    pandoc \
-    libcurl4-openssl-dev \
-    nodejs \
-    nodejs-legacy \
-    npm
-
-RUN pip2 install --upgrade setuptools pip
-RUN pip3 install --upgrade setuptools pip
-
-RUN mkdir -p /srv/
-WORKDIR /srv/
-RUN git clone --depth 1 https://github.com/ipython/ipykernel /srv/ipykernel
-WORKDIR /srv/ipykernel
-RUN pip2 install -r requirements.txt -e .
-RUN pip3 install -r requirements.txt -e .
-
-ADD . /srv/notebook
-WORKDIR /srv/notebook/
-RUN chmod -R +rX /srv/notebook
-
-# install kernels
-RUN python2 -m ipykernel.kernelspec
-RUN python3 -m ipykernel.kernelspec
-
-# WORKDIR /tmp/
-
-# RUN nosetests notebook
-
 
 #------------------------------------------------------------------------------------------------------
 ##########this part is from the image "ipython/notebook" the MAINTAINER is IPython Project <ipython-dev@scipy.org>
-
+FROM ipython/ipython:3.x
 VOLUME /notebooks
 WORKDIR /notebooks
 
@@ -80,9 +19,6 @@ ENV USE_HTTP 0
 
 ADD notebook.sh /
 RUN chmod u+x /notebook.sh
-
-CMD ["/notebook.sh"]
-
 
 ##########this part is from the image "simexp/niak" the MAINTAINER Pierre Bellec <pierre.bellec@criugm.qc.ca>
 RUN apt-get update
@@ -175,3 +111,4 @@ RUN cd /home/niak/extensions && wget https://sites.google.com/site/bctnet/Home/f
 # Build octave configure file
 RUN echo addpath\(genpath\(\"/home/niak/\"\)\)\; >> /etc/octave.conf
 #----------------------------------------------------------------------------------------------------------------
+CMD ["/notebook.sh"]
