@@ -111,4 +111,10 @@ RUN cd /home/niak/extensions && wget https://sites.google.com/site/bctnet/Home/f
 # Build octave configure file
 RUN echo addpath\(genpath\(\"/home/niak/\"\)\)\; >> /etc/octave.conf
 #----------------------------------------------------------------------------------------------------------------
+# Pymatbridge install
+## Dependencies 
+RUN pip install pyzmq
+RUN pip install numpy
+RUN pip install pymatbridge
+
 CMD ["/notebook.sh"]
