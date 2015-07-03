@@ -1,9 +1,32 @@
 IPython in Docker
 =================
 
-This repository contains the Dockerfiles and shell scripts used by the Docker
-containers:
+### Instructions to set up Ipython notebook that runs octave 
 
-* [ipython/notebook](notebook) - Relies on `ipython/ipython` and *just* sets up the IPython notebook. No additional Python packages are installed by default
+*  Pull the image `docker pull yassinebha/ipython_notebook:0.0.1`
+*  Create a shared folder in you home directory `mkdir $HOME/notebooks`
+*  Run the image
 
-In practice though, the most recent versions of [each of these images is up on the Docker Hub](https://registry.hub.docker.com/repos/ipython/).
+```
+docker run --name notebook_test -d -p 443:8888  -v $HOME/notebooks/:/notebooks  -e "PASSWORD=password" yassinebha/ipython_notebook:0.0.1
+```
+*  Head to your browser then type [https://localhost](https://localhost) then over pass warning message then type the password which is `password` in this case ( you can choose your own ).
+
+*  On OSX and Windows, extra steps are required to find the address and the port that the container has been forwarded to. In a Boot2Docker shell, run: `boot2docker ip` This should return an address like 192.168.59.103. Next, find the port in the docker environment with: `docker port notebook_test 8888`. This should return a port like 0.0.0.0.:443.
+ Port your browser to the resulting address and port; for example: [https://192.168.59.103:443](https://192.168.59.103:443).
+
+*  Open a new ipython notebook then __choose  python 2 not 3 as kernel__
+*  In the first cell put this code to start octave interfacing: 
+
+```
+from pymatbridge import Octave
+octave = Octave()
+octave.start()
+%load_ext pymatbridge
+```
+*  Finally, in the begginig of each cell that will run octave code put the matlab magic command `%%matlab` like this :
+
+```
+%%matlab
+sombrero
+```
