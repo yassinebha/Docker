@@ -5,7 +5,7 @@
 
 #------------------------------------------------------------------------------------------------------
 ##########this part is from the image "ipython/notebook" the MAINTAINER is IPython Project <ipython-dev@scipy.org>
-FROM ipython/ipython:3.x
+FROM jupyter/notebook:latest
 VOLUME /notebooks
 WORKDIR /notebooks
 
