@@ -3,12 +3,12 @@ IPython in Docker
 
 ### Instructions to set up Ipython notebook that runs octave 
 
-*  Pull the image `docker pull yassinebha/ipython_notebook:0.0.1`
+*  Pull the image `docker pull yassinebha/niak_notebook:latest`
 *  Create a shared folder in you home directory `mkdir $HOME/notebooks`
 *  Run the image
 
 ```
-docker run --name notebook_test -d -p 443:8888  -v $HOME/notebooks/:/notebooks  -e "PASSWORD=password" yassinebha/ipython_notebook:0.0.1
+docker run --name notebook_test -d -p 443:8888  -v $HOME/notebooks/:/notebooks  -e "PASSWORD=password" yassinebha/niak_notebook:latest
 ```
 *  Head to your browser then type [https://localhost](https://localhost) then over pass warning message then type the password which is `password` in this case ( you can choose your own ).
 
