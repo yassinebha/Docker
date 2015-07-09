@@ -113,8 +113,18 @@ RUN echo addpath\(genpath\(\"/home/niak/\"\)\)\; >> /etc/octave.conf
 #----------------------------------------------------------------------------------------------------------------
 # Pymatbridge install
 ## Dependencies 
-RUN pip install pyzmq
-RUN pip install numpy
-RUN pip install pymatbridge
+RUN pip install --upgrade pyzmq
+RUN pip install --upgrade numpy
+RUN pip install --upgrade pymatbridge
+# Nilearn install
+RUN apt-get install -y \
+libfreetype6-dev \
+libpng-dev
+RUN pip install --upgrade matplotlib
+RUN pip install --upgrade nibabel
+RUN pip install --upgrade nilearn
+RUN pip install --upgrade scipy
+RUN pip install --upgrade plotly
+RUN pip install --upgrade scikit-learn
 
 CMD ["/notebook.sh"]
