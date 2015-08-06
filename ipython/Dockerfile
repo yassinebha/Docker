@@ -126,5 +126,6 @@ RUN pip install --upgrade nilearn
 RUN pip install --upgrade scipy
 RUN pip install --upgrade plotly
 RUN pip install --upgrade scikit-learn
+RUN pip install --upgrade pandas
 
 CMD ["/notebook.sh"]
