@@ -47,6 +47,7 @@ RUN apt-get install -y \
 RUN wget http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb -P /tmp
 RUN dpkg -i /tmp/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb
 RUN rm /tmp/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb
+RUN source /opt/minc-1.9.3/minc-toolkit-config.sh
 
 # Install octave
 RUN apt-get install python-software-properties -y
@@ -116,16 +117,13 @@ RUN echo addpath\(genpath\(\"/home/niak/\"\)\)\; >> /etc/octave.conf
 RUN pip install --upgrade pyzmq
 RUN pip install --upgrade numpy
 RUN pip install --upgrade pymatbridge
-# Nilearn install
+# Nilearn and other packages
 RUN apt-get install -y \
 libfreetype6-dev \
 libpng-dev
-RUN pip install --upgrade matplotlib
-RUN pip install --upgrade nibabel
-RUN pip install --upgrade nilearn
-RUN pip install --upgrade scipy
-RUN pip install --upgrade plotly
-RUN pip install --upgrade scikit-learn
-RUN pip install --upgrade pandas
+RUN pip install --upgrade matplotlib nibabel nilearn scipy plotly scikit-learn pandas  metakernel 
+# some extra kernels 
+RUN pip install --upgrade octave_kernel bash_kernel
+RUN python -m bash_kernel.install
 
 CMD ["/notebook.sh"]
