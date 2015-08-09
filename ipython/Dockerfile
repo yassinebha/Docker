@@ -47,7 +47,7 @@ RUN apt-get install -y \
 RUN wget http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb -P /tmp
 RUN dpkg -i /tmp/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb
 RUN rm /tmp/minc-toolkit-1.9.3-20140830-Ubuntu_14.04-x86_64.deb
-RUN source /opt/minc-1.9.3/minc-toolkit-config.sh
+RUN /bin/bash -c "source /opt/minc-1.9.3/minc-toolkit-config.sh"
 
 # Install octave
 RUN apt-get install python-software-properties -y
