@@ -121,9 +121,18 @@ RUN pip install --upgrade pymatbridge
 RUN apt-get install -y \
 libfreetype6-dev \
 libpng-dev
-RUN pip install --upgrade matplotlib nibabel nilearn scipy plotly scikit-learn pandas  metakernel 
+RUN pip install --upgrade matplotlib 
+RUN pip install --upgrade nibabel
+RUN pip install --upgrade nilearn
+RUN pip install --upgrade scipy
+RUN pip install --upgrade plotly
+RUN pip install --upgrade scikit-learn
+RUN pip install --upgrade pandas
+RUN pip install --upgrade metakernel
+       
 # some extra kernels 
-RUN pip install --upgrade octave_kernel bash_kernel
+RUN pip install --upgrade octave_kernel
+RUN pip install --upgrade bash_kernel
 RUN python -m bash_kernel.install
 
 CMD ["/notebook.sh"]
