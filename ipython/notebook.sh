@@ -21,5 +21,4 @@ if [ $USE_HTTP -ne 0 ]; then
   CERTFILE_OPTION=""
 fi
 
-MATLAB_EXECUTABLE=/usr/bin/octave
-ipython notebook --no-browser --port 8888 --ip=* $CERTFILE_OPTION --NotebookApp.password="$HASH" --kernel=matlab_kernel
+ipython notebook --no-browser --port 8888 --ip=* $CERTFILE_OPTION --NotebookApp.password="$HASH"
