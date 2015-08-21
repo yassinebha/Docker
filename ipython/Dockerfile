@@ -52,7 +52,7 @@ RUN /bin/bash -c "source /opt/minc-1.9.3/minc-toolkit-config.sh"
 # Install octave
 RUN apt-get install python-software-properties -y
 #RUN add-apt-repository ppa:octave/stable -y
-#RUN apt-get update
+RUN apt-get update
 
 RUN apt-get install -y \
   bison \
@@ -93,6 +93,7 @@ RUN octave --eval "cd /home/octave; \
 # Install mricron and libcanberra
 RUN apt-get install mricron -y
 RUN apt-get install libcanberra-gtk-module -y
+RUN apt-get update
 
 # Build octave configure file
 RUN echo more off >> /etc/octave.conf
@@ -117,6 +118,12 @@ RUN echo addpath\(genpath\(\"/home/niak/\"\)\)\; >> /etc/octave.conf
 RUN pip install --upgrade pyzmq
 RUN pip install --upgrade numpy
 RUN pip install --upgrade pymatbridge
+# some extra kernels 
+RUN python -m bash_kernel.install
+RUN pip install --upgrade octave_kernel
+RUN pip install --upgrade bash_kernel
+RUN pip install --upgrade metakernel
+
 # Nilearn and other packages
 RUN apt-get install -y \
 libfreetype6-dev \
@@ -128,11 +135,20 @@ RUN pip install --upgrade scipy
 RUN pip install --upgrade plotly
 RUN pip install --upgrade scikit-learn
 RUN pip install --upgrade pandas
-RUN pip install --upgrade metakernel
-       
-# some extra kernels 
-RUN pip install --upgrade octave_kernel
-RUN pip install --upgrade bash_kernel
-RUN python -m bash_kernel.install
 
+## R kernel
+RUN apt-get update
+RUN apt-get install -y \ 
+software-properties-common \ 
+python-software-properties
+RUN add-apt-repository -y ppa:marutter/rrutter
+RUN apt-get update
+RUN apt-get install -y \ 
+r-base \
+r-base-dev 
+#to finelize the R install kernel type this in R terminal:
+#install.packages(c('rzmq','repr','IRkernel','IRdisplay'),
+#                 repos = c('http://irkernel.github.io/', getOption('repos')),
+#                 type = 'source')
+#IRkernel::installspec()
 CMD ["/notebook.sh"]
