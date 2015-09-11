@@ -118,11 +118,12 @@ RUN echo addpath\(genpath\(\"/home/niak/\"\)\)\; >> /etc/octave.conf
 RUN pip install --upgrade pyzmq
 RUN pip install --upgrade numpy
 RUN pip install --upgrade pymatbridge
-# some extra kernels 
-RUN python -m bash_kernel.install
+# some extra kernels
+RUN pip install --upgrade metakernel
+#RUN python -m bash_kernel.install
 RUN pip install --upgrade octave_kernel
 RUN pip install --upgrade bash_kernel
-RUN pip install --upgrade metakernel
+
 
 # Nilearn and other packages
 RUN apt-get install -y \
