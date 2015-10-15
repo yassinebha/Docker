@@ -1,5 +1,5 @@
 
-FROM ubuntu:12.04
+FROM ubuntu
 MAINTAINER Yassine Benhajali <yanamarji@gmail.com>
 RUN apt-get update
 RUN apt-get dist-upgrade -y
@@ -17,12 +17,12 @@ RUN sudo apt-get install -y \
  libxi-dev \
  libxmu6 \
  libxmu-dev \
- libxmu-headers
+ libxmu-headers\
+ git
 
-RUN cd
 RUN git clone --recursive git://github.com/BIC-MNI/minc-toolkit.git /tmp/minc-toolkit
 RUN cd /tmp/minc-toolkit
 RUN git checkout develop
 RUN mkdir build && cd build
-RUN ccmake .. # Enter the location of all dependencies, if not detected automatically ...,
+RUN ccmake .. # Enter the location of all dependencies, if not detected automatically ...
 RUN make && make test && make install
