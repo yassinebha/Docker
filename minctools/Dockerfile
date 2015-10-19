@@ -1,4 +1,3 @@
-
 FROM ubuntu
 MAINTAINER Yassine Benhajali <yanamarji@gmail.com>
 RUN apt-get update
@@ -17,12 +16,17 @@ RUN sudo apt-get install -y \
  libxi-dev \
  libxmu6 \
  libxmu-dev \
- libxmu-headers\
+ libxmu-headers \
+ bc \
  git
 
 RUN git clone --recursive git://github.com/BIC-MNI/minc-toolkit.git /tmp/minc-toolkit
-RUN cd /tmp/minc-toolkit
+WORKDIR /tmp/minc-toolkit
 RUN git checkout develop
-RUN mkdir build && cd build
-RUN ccmake .. # Enter the location of all dependencies, if not detected automatically ...
-RUN make && make test && make install
+RUN git submodule foreach --recursive 'git checkout develop || :'
+RUN mkdir /tmp/minc-build
+WORKDIR /tmp/minc-build
+RUN cmake ../minc-toolkit -DCMAKE_BUILD_TYPE=Release -DMT_BUILD_VISUAL_TOOLS=ON
+RUN make
+RUN make test
+RUN make install
