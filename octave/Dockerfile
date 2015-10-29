@@ -23,7 +23,8 @@ RUN apt-get install -y \
   libxmu-headers \
   libxmu6 \
   octave=3.8.1-1ubuntu1 \
-  unzip
+  unzip \
+  wget
 
 # Fetch Octave forge packages
 RUN mkdir /home/octave
