@@ -1,4 +1,4 @@
-FROM yassinebha/minc-toolkit-dev
+FROM yassinebha/minc-toolkit-dev-custom
 MAINTAINER Yassine Benhajali <yanamarji@gmail.com>
 
 # Update repository list
