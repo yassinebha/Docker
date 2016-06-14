@@ -1,32 +1,15 @@
-IPython in Docker
+Jupyter in Docker with NIAK
 =================
 
-### Instructions to set up Ipython notebook that runs octave 
+### Instructions to set up Jupyter notebook for NIAK
 
-*  Pull the image `docker pull yassinebha/niak_notebook:latest`
-*  Create a shared folder in you home directory `mkdir $HOME/notebooks`
-*  Run the image
+*  Run this commad on a terminal:
 
 ```
-docker run --name notebook_test -d -p 443:8888  -v $HOME/notebooks/:/notebooks  -e "PASSWORD=password" yassinebha/niak_notebook:latest
+docker run -it --privileged -d -p 8888:8888  --name niak_jupy -v /etc/shadow:/etc/shadow \
+-v /etc/group:/etc/group -v /etc/passwd:/etc/passwd   -v /tmp/.X11-unix:/tmp/.X11-unix \
+-e DISPLAY=unix$DISPLAY -v $HOME:$HOME  yassinebha/niak_jupyter:0.1 /bin/bash --login -c \
+"jupyter notebook --no-browser --port 8888 --ip=*" &&  kde-open 'http://localhost:8888/' \
+|| xdg-open 'http://localhost:8888/'|| open 'http://localhost:8888/'
 ```
-*  Head to your browser then type [https://localhost](https://localhost) then over pass warning message then type the password which is `password` in this case ( you can choose your own ).
-
-*  On OSX and Windows, extra steps are required to find the address and the port that the container has been forwarded to. In a Boot2Docker shell, run: `boot2docker ip` This should return an address like 192.168.59.103. Next, find the port in the docker environment with: `docker port notebook_test 8888`. This should return a port like 0.0.0.0.:443.
- Port your browser to the resulting address and port; for example: [https://192.168.59.103:443](https://192.168.59.103:443).
-
-*  Open a new ipython notebook then __choose  python 2 not 3 as kernel__
-*  In the first cell put this code to start octave interfacing: 
-
-```
-from pymatbridge import Octave
-octave = Octave()
-octave.start()
-%load_ext pymatbridge
-```
-*  Finally, in the begginig of each cell that will run octave code put the matlab magic command `%%matlab` like this :
-
-```
-%%matlab
-sombrero
-```
+*  Head to your browser a new tab will open with a jupyter_niak ready to use.
