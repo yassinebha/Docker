@@ -7,6 +7,7 @@ RUN  cd /home/ &&  wget -qO- -O tmp.zip  https://github.com/SIMEXP/niak/archive/
 RUN  mv /home/niak-dev-0.14.0 /home/niak
 
 # Pip installation
+apt-get install wget
 wget https://bootstrap.pypa.io/get-pip.py
 python3 get-pip.py
 
@@ -43,4 +44,4 @@ RUN echo addpath\(genpath\(\"/home/niak/\"\)\)\; >> /etc/octave.conf
 # start jupyter then head to the adress http://localhost:8888/
 RUN mkdir /home/niak/tutorial
 WORKDIR /home/niak/tutorial
-jupyter notebook --no-browser --port 8888 --ip=*
+CMD ["jupyter notebook --no-browser --port 8888 --ip=*"]
