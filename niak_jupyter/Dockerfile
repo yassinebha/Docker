@@ -7,17 +7,16 @@ RUN  cd /home/ &&  wget -qO- -O tmp.zip  https://github.com/SIMEXP/niak/archive/
 RUN  mv /home/niak-dev-0.14.0 /home/niak
 
 # Pip installation
-apt-get install wget
-wget https://bootstrap.pypa.io/get-pip.py
-python3 get-pip.py
+RUN wget https://bootstrap.pypa.io/get-pip.py
+RUN python3 get-pip.py
 
 # Jupyter install
-pip3 install notebook
+RUN pip3 install notebook
 
 # Octave_kernel install
-pip3 install octave_kernel
-python3 -m octave_kernel.install
-pip3 install ipywidgets
+RUN pip3 install octave_kernel
+RUN python3 -m octave_kernel.install
+RUN pip3 install ipywidgets
 
 
 # Nilearn and other packages
