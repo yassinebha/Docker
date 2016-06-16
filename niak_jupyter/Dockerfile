@@ -30,7 +30,7 @@ RUN pip3 install --upgrade scikit-learn
 RUN pip3 install --upgrade nilearn
 
 # Pandas install
-RUN apt-get install python-pandas
+RUN apt-get install python-pandas -y
 
 
 # Build octave configure file
