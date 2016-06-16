@@ -21,8 +21,8 @@ RUN pip3 install ipywidgets
 
 # Nilearn and other packages
 RUN apt-get install sudo -y
-RUN apt-get install python-dev -y
-RUN pip3 install --upgrade matplotlib
+RUN apt-get install python3-all-dev -y
+RUN apt-get install python3-matplotlib -y
 RUN pip3 install --upgrade nibabel
 RUN pip3 install --upgrade scipy
 RUN pip3 install --upgrade plotly
