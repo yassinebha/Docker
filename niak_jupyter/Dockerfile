@@ -20,17 +20,17 @@ RUN pip3 install ipywidgets
 
 
 # Nilearn and other packages
-RUN apt-get install sudo -y
-RUN apt-get install python3-all-dev -y
-RUN apt-get install python3-matplotlib -y
-RUN pip3 install --upgrade nibabel
-RUN pip3 install --upgrade scipy
-RUN pip3 install --upgrade plotly
-RUN pip3 install --upgrade scikit-learn
-RUN pip3 install --upgrade nilearn
+#RUN apt-get install sudo -y
+#RUN apt-get install python3-all-dev -y
+#RUN apt-get install python3-matplotlib -y
+#RUN pip3 install --upgrade nibabel
+#RUN pip3 install --upgrade scipy
+#RUN pip3 install --upgrade plotly
+#RUN pip3 install --upgrade scikit-learn
+#RUN pip3 install --upgrade nilearn
 
 # Pandas install
-RUN apt-get install python-pandas -y
+#RUN apt-get install python-pandas -y
 
 
 # Build octave configure file
