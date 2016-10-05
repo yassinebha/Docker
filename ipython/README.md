@@ -1,3 +1,5 @@
+[![](https://images.microbadger.com/badges/version/yassinebha/niak_notebook.svg)](https://microbadger.com/images/yassinebha/niak_notebook "Get your own version badge on microbadger.com")
+
 IPython in Docker
 =================
 
@@ -30,4 +32,3 @@ octave.start()
 %%matlab
 sombrero
 ```
-[![](https://images.microbadger.com/badges/version/yassinebha/niak_notebook.svg)](https://microbadger.com/images/yassinebha/niak_notebook "Get your own version badge on microbadger.com")
